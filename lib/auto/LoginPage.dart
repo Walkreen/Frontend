@@ -1,3 +1,5 @@
+import 'package:capstone/data/my_button.dart';
+import 'package:capstone/data/my_textField.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -8,6 +10,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  //controller 선언부분
+  TextEditingController controllerID = TextEditingController();
+  TextEditingController controllerPWD = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,113 +29,121 @@ class _LoginPageState extends State<LoginPage> {
             elevation: 0.0,
           ),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(padding: EdgeInsets.only(top: 50.0)),
-              Form(
-                child: Container(
-                  padding: EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextField(
+        body: GestureDetector(
+          //화면의 빈 공간을 클릭하면 키보드가 사라지게 구현
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(padding: EdgeInsets.only(top: 50.0)),
+                Form(
+                  child: Container(
+                    padding: EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 60.0,
+                        ),
                         //아이디 입력 부분
-                        decoration: InputDecoration(
-                          labelText: '아이디',
-                          labelStyle: TextStyle(color: Colors.black),
-                          hintText: '아이디를 입력하시오',
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.redAccent),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(
-                              width: 1.5,
-                              color: Color(0xFF339E66),
-                            ),
-                          ),
+                        MyTextField(
+                            name: '아이디',
+                            text: '아이디를 입력하시오',
+                            keyboard: TextInputType.text,
+                            controller: controllerID,),
+
+                        SizedBox(
+                          height: 20.0,
                         ),
-                        keyboardType: TextInputType.text,
-                      ),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      TextField(
                         //비밀번호 입력 부분
-                        decoration: InputDecoration(
-                          labelText: '비밀번호',
-                          labelStyle: TextStyle(color: Colors.black),
-                          hintText: '비밀번호를 입력하시오',
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.redAccent),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(
-                              width: 1.5,
-                              color: Color(0xFF339E66),
-                            ),
-                          ),
+                        MyTextField(
+                          name: '비밀번호',
+                          text: '비밀번호를 입력하시오',
+                          keyboard: TextInputType.text,
+                          controller: controllerPWD,
+                          obscureText: true,
                         ),
-                        keyboardType: TextInputType.text,
-                        obscureText: true,
-                      ),
-                      SizedBox(
-                        height: 5.0,
-                      ),
-                      Text(
-                        '아이디 또는 비밀번호가 일치하지 않습니다.',
-                        style: TextStyle(color: Colors.red, fontSize: 10.0),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 50.0,
-              ),
-              ButtonTheme(
-                // 아이디･비밀번호 찾기로 이동하는 페이지
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/Finding');
-                  },
-                  child: Text(
-                    '아이디 또는 비밀번호를 잊으셨나요?',
-                    style: TextStyle(
-                        fontSize: 11.0,
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                SizedBox(
+                  height: 30.0,
+                ),
+                ButtonTheme(
+                  // 아이디･비밀번호 찾기로 이동하는 페이지
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/Finding');
+                    },
+                    child: Text(
+                      '아이디 또는 비밀번호를 잊으셨나요?',
+                      style: TextStyle(
+                          fontSize: 11.0,
+                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
                   ),
                 ),
-              ),
-              ButtonTheme(
-                // 로그인 버튼 구현
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text(
-                    '로그인',
-                    style:
-                        TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF007F4A),
-                    minimumSize: Size(350, 45),
-                  ),
+                Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: MyButton(
+                      buttonName: '로그인',
+                      onPressed: () {
+                        if (controllerID.text == 'capstone' &&
+                            controllerPWD.text == '1234') {
+                        } else if (controllerID.text == 'capstone' &&
+                            controllerPWD.text != '1234') {
+                          showSnackBar2(context);
+                        } else if (controllerID.text != 'capstone' &&
+                            controllerPWD.text == '1234') {
+                          showSnackBar3(context);
+                        } else {
+                          showSnackBar(context);
+                        }
+                      },),
                 ),
-              )
-            ],
+              ],
+            ),
           ),
         ));
   }
+}
+
+void showSnackBar(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(
+      '로그인 정보를 확인하세요',
+      textAlign: TextAlign.center,
+    ),
+    duration: Duration(seconds: 2),
+    backgroundColor: Color(0xFF036635),
+  ));
+}
+
+void showSnackBar2(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(
+      '비밀번호가 일치하지 않습니다.',
+      textAlign: TextAlign.center,
+    ),
+    duration: Duration(seconds: 2),
+    backgroundColor: Color(0xFF036635),
+  ));
+}
+
+void showSnackBar3(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(
+        '아이디가 일치하지 않습니다',
+        textAlign: TextAlign.center,
+      ),
+      duration: Duration(seconds: 2),
+      backgroundColor: Color(0xFF036635)));
 }
