@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class MyButton extends StatelessWidget {
   final String buttonName;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
-  MyButton({required this.buttonName, required this.onPressed});
+  MyButton({required this.buttonName, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +13,14 @@ class MyButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           buttonName,
-          style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
         style: ElevatedButton.styleFrom(
           primary: Color(0xFF007F4A),
-          minimumSize: Size(400, 45),
+          minimumSize: Size(400, 55),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0)
+          )
         ),
       ),
     );

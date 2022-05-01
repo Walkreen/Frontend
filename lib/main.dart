@@ -1,7 +1,11 @@
-import 'package:capstone/auto/FindingPage.dart';
-import 'package:capstone/auto/IntroPage.dart';
+import 'package:capstone/MainScreen/HomePage.dart';
+import 'package:capstone/SplashPage.dart';
+import 'package:capstone/auto/Join/JoinPage2.dart';
+import 'package:capstone/auto/Login/IntroPage.dart';
+import 'package:capstone/auto/Join/JoinPage1.dart';
+import 'package:capstone/auto/Join/JoinPage3.dart';
 import 'package:flutter/material.dart';
-import 'package:capstone/auto/LoginPage.dart';
+import 'package:capstone/auto/Login/LoginPage.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,10 +21,16 @@ class MyApp extends StatelessWidget {
 
       // 페이지 별 route 할당 부분
       routes: {
-        '/' : (context) => IntroPage(),
+        '/' : (context) => SplashPage(),
+        '/Intro' : (context) => IntroPage(),
         '/Login' : (context) => LoginPage(),
-        '/Finding' : (context) => FindingPage(),
+        '/FirstJoin' : (context) => JoinPage1(),
+        '/SecondJoin' : (context) => JoinPage2(),
+        '/LastJoin' : (context) => JoinPage3(),
+        '/Home' : (context) => HomePage(),
       }
     );
   }
 }
+
+

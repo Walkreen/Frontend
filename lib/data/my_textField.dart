@@ -6,14 +6,15 @@ class MyTextField extends StatelessWidget {
   final TextInputType keyboard;
   final TextEditingController controller;
   bool obscureText;
+  bool focus;
 
   MyTextField(
       {required this.name,
-        required this.text,
-        required this.keyboard,
-        required this.controller,
-        this.obscureText= false,
-      });
+      required this.text,
+      required this.keyboard,
+      required this.controller,
+      this.obscureText = false,
+      this.focus = false});
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +22,13 @@ class MyTextField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         labelText: name,
-        labelStyle: TextStyle(color: Colors.black),
+        labelStyle: const TextStyle(color: Colors.black),
         hintText: text,
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(5.0)),
           borderSide: BorderSide(width: 1, color: Colors.redAccent),
         ),
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(5.0)),
           borderSide: BorderSide(
             width: 1.5,
@@ -37,6 +38,7 @@ class MyTextField extends StatelessWidget {
       ),
       keyboardType: keyboard,
       obscureText: obscureText,
+      autofocus: focus,
     );
   }
 }
