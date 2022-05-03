@@ -24,7 +24,7 @@ class _JoinPage1State extends State<JoinPage1> {
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: Colors.transparent,
-          iconTheme: IconThemeData(color: Colors.black //Icon 색변경
+          iconTheme: const IconThemeData(color: Colors.black //Icon 색변경
               ),
         ),
         body: GestureDetector(
@@ -116,6 +116,7 @@ class _JoinPage1State extends State<JoinPage1> {
                               text: '특수문자 포함 8자리 이상 입력하세요',
                               keyboard: TextInputType.text,
                               controller: _controllerPW1,
+                              obscureText: true
                               ),
                           const SizedBox(
                             height: 20.0,
@@ -124,7 +125,9 @@ class _JoinPage1State extends State<JoinPage1> {
                               name: '비밀번호 재확인',
                               text: '비밀번호를 다시 한번 입력하세요',
                               keyboard: TextInputType.text,
-                              controller: _controllerPW2),
+                              controller: _controllerPW2,
+                              obscureText: true
+                          ),
                           const SizedBox(
                             height: 40.0,
                           ),

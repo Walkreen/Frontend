@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                         TitleText(
                             text: '다시 돌아오셨군요!\n'
                                 '지구를 위해 함께해요'),
-                        SizedBox(
+                        const SizedBox(
                           height: 30.0,
                         ),
                         MyTextField(
@@ -103,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () {
                           _resetPwdDialog(context);
                         },
-                        child: Text(
+                        child: const Text(
                           '비밀번호를 잊으셨나요?',
                           style: TextStyle(
                               fontSize: 13.0,

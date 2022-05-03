@@ -54,14 +54,14 @@ class _IntroPageState extends State<IntroPage> {
                       MyButton(
                           buttonName: '로그인',
                           onPressed: () {
-                            _LoginToast();
+                            _loginToast();
                             Navigator.pushNamed(context, '/Login');
                           }),
 
                       Center(
                         child: TextButton(
                             onPressed: () {
-                              _JoinToast();
+                              _joinToast();
                               Navigator.pushNamed(context, '/FirstJoin');
                             },
                             child: const Text(
@@ -136,7 +136,7 @@ class _IntroPageState extends State<IntroPage> {
   }
 }
 
-void _LoginToast() {
+void _loginToast() {
   Fluttertoast.showToast(
       msg: '로그인 창으로 이동합니다',
       gravity: ToastGravity.BOTTOM,
@@ -147,7 +147,7 @@ void _LoginToast() {
       toastLength: Toast.LENGTH_SHORT);
 }
 
-void _JoinToast() {
+void _joinToast() {
   Fluttertoast.showToast(
       msg: '회원가입 창으로 이동합니다',
       gravity: ToastGravity.BOTTOM,

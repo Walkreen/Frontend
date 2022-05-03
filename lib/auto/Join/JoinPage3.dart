@@ -22,7 +22,7 @@ class _JoinPage3State extends State<JoinPage3> {
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: Colors.transparent,
-          iconTheme: IconThemeData(color: Colors.black //색변경
+          iconTheme: const IconThemeData(color: Colors.black //색변경
               ),
         ),
         body: GestureDetector(
@@ -39,28 +39,28 @@ class _JoinPage3State extends State<JoinPage3> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 70.0,
                           ),
                           TitleText(
                               text: '이제 마지막입니다.\n'
                                   '수고하셨습니다!'),
-                          SizedBox(
+                          const SizedBox(
                             height: 40.0,
                           ),
-                          Text(
+                          const Text(
                             '성별',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20.0),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10.0,
                           ),
                           Row(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 width: 20.0,
                               ),
 //여자 성별 부분
@@ -80,17 +80,17 @@ class _JoinPage3State extends State<JoinPage3> {
                                   activeColor: Colors.white,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 12.0,
                               ),
-                              Text(
+                              const Text(
                                 '여성',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 17.0,
                                     fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 120.0,
                               ),
                               //남자 성별 부분
@@ -110,10 +110,10 @@ class _JoinPage3State extends State<JoinPage3> {
                                   activeColor: Colors.white,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 12.0,
                               ),
-                              Text(
+                              const Text(
                                 '남성',
                                 style: TextStyle(
                                     color: Colors.black,
@@ -122,18 +122,18 @@ class _JoinPage3State extends State<JoinPage3> {
                               )
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30.0,
                           ),
                           //생년월일
-                          Text(
+                          const Text(
                             '생년 월일',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20.0),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30.0,
                           ),
                           Container(
@@ -153,14 +153,14 @@ class _JoinPage3State extends State<JoinPage3> {
                                 });
                                 print(_selectedDate);
                               },
-                              pickerTheme: DateTimePickerTheme(
+                              pickerTheme: const DateTimePickerTheme(
                                 itemTextStyle: TextStyle(
                                     color: Colors.black, fontSize: 19),
                                 dividerColor: Colors.blue,
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30.0,
                           ),
                           MyButton(
