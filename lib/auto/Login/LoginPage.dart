@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                                   _isVisible = true;
                                 });
                               } else {
-                                Navigator.pushNamed(context, '/Home');
+                                Navigator.pushNamed(context, '/Main');
                               }
                             }),
                         const SizedBox(
