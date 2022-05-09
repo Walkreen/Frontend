@@ -166,7 +166,7 @@ class _JoinPage3State extends State<JoinPage3> {
                           MyButton(
                               buttonName: '가입하기',
                               onPressed: () {
-                                Navigator.pushNamed(context, '/Home');
+                                Navigator.pushNamed(context, '/Main');
                               })
                         ],
                       ),
