@@ -56,8 +56,7 @@ class _JoinPage1State extends State<JoinPage1> {
                               hintText: '이메일을 입력하세요',
                               labelText: '이메일',
                               labelStyle: const TextStyle(color: Colors.black),
-                              contentPadding: const EdgeInsets.fromLTRB(
-                                  10.0, 10.0, 10.0, 10.0),
+                              contentPadding: const EdgeInsets.all(10.0),
                               suffix: ElevatedButton(
                                 onPressed: () {
                                   if (_controllerID.text == "capstone@naver.com") {

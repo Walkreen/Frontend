@@ -23,108 +23,111 @@ class _IntroPageState extends State<IntroPage> {
         },
         child: SingleChildScrollView(
           child: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.all((20)),
-              child: Form(
-                child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 60.0,
-                      ),
-                      TitleText(
-                          text: '지구를 위한 발걸음\n'
-                              '그 첫 단계입니다!'),
-                      const SizedBox(
-                        height: 30.0,
-                      ),
-
-                      Center(
-                        child: Image.asset(
-                          'images/mainLogo.png',
-                          width: 250,
-                          height: 250,
+            child: Container(
+              color: Colors.white,
+              child: Padding(
+                padding: EdgeInsets.all((20)),
+                child: Form(
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 60.0,
                         ),
-                      ),
+                        TitleText(
+                            text: '지구를 위한 발걸음\n'
+                                '그 첫 단계입니다!'),
+                        const SizedBox(
+                          height: 30.0,
+                        ),
 
-                      const SizedBox(
-                        height: 50.0,
-                      ),
-                      MyButton(
-                          buttonName: '로그인',
-                          onPressed: () {
-                            _loginToast();
-                            Navigator.pushNamed(context, '/Login');
-                          }),
+                        Center(
+                          child: Image.asset(
+                            'images/mainLogo.png',
+                            width: 250,
+                            height: 250,
+                          ),
+                        ),
 
-                      Center(
-                        child: TextButton(
+                        const SizedBox(
+                          height: 50.0,
+                        ),
+                        MyButton(
+                            buttonName: '로그인',
                             onPressed: () {
-                              _joinToast();
-                              Navigator.pushNamed(context, '/FirstJoin');
-                            },
-                            child: const Text(
-                              '회원이 아니신가요?',
-                              style: TextStyle(
-                                  fontSize: 13.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  decoration: TextDecoration.underline),
-                            )),
-                      ),
+                              _loginToast();
+                              Navigator.pushNamed(context, '/Login');
+                            }),
 
-                      //kakaoTak oauth 처리 부분 - 필요하면 넣기
-                      //
-                      // //실선 부분
-                      // SizedBox(
-                      //   height: 25.0,
-                      // ),
-                      // Divider(thickness: 1, color: Color(0xDEDEDEDE)),
-                      // SizedBox(
-                      //   height: 25.0,
-                      // ),
-                      //
-                      // //카카오톡 버튼 만들기
-                      // ButtonTheme(
-                      //   child: ElevatedButton(
-                      //     child: Row(
-                      //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //       children: [
-                      //         Image.asset(
-                      //           'images/klogo.png',
-                      //           height: 50.0,
-                      //           width: 50.0,
-                      //         ),
-                      //         Text(
-                      //           '카카오 로그인',
-                      //           style: TextStyle(
-                      //               color: Colors.black,
-                      //               fontSize: 18.0,
-                      //               fontWeight: FontWeight.bold),
-                      //         ),
-                      //         Opacity(
-                      //           opacity: 0.0,
-                      //           child: Image.asset(
-                      //             'images/klogo.png',
-                      //             height: 50.0,
-                      //             width: 50.0,
-                      //           ),
-                      //         )
-                      //       ],
-                      //     ),
-                      //     style: ElevatedButton.styleFrom(
-                      //         primary: Color(0xfffeea0d),
-                      //         minimumSize: Size(100, 45),
-                      //         shape: RoundedRectangleBorder(
-                      //             borderRadius: BorderRadius.circular(16.0))),
-                      //     onPressed: () {},
-                      //   ),
-                      //   shape: RoundedRectangleBorder(
-                      //       borderRadius:
-                      //           BorderRadius.all(Radius.circular(16.0))),
-                      // )
-                    ],
+                        Center(
+                          child: TextButton(
+                              onPressed: () {
+                                _joinToast();
+                                Navigator.pushNamed(context, '/FirstJoin');
+                              },
+                              child: const Text(
+                                '회원이 아니신가요?',
+                                style: TextStyle(
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    decoration: TextDecoration.underline),
+                              )),
+                        ),
+
+                        //kakaoTak oauth 처리 부분 - 필요하면 넣기
+                        //
+                        // //실선 부분
+                        // SizedBox(
+                        //   height: 25.0,
+                        // ),
+                        // Divider(thickness: 1, color: Color(0xDEDEDEDE)),
+                        // SizedBox(
+                        //   height: 25.0,
+                        // ),
+                        //
+                        // //카카오톡 버튼 만들기
+                        // ButtonTheme(
+                        //   child: ElevatedButton(
+                        //     child: Row(
+                        //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //       children: [
+                        //         Image.asset(
+                        //           'images/klogo.png',
+                        //           height: 50.0,
+                        //           width: 50.0,
+                        //         ),
+                        //         Text(
+                        //           '카카오 로그인',
+                        //           style: TextStyle(
+                        //               color: Colors.black,
+                        //               fontSize: 18.0,
+                        //               fontWeight: FontWeight.bold),
+                        //         ),
+                        //         Opacity(
+                        //           opacity: 0.0,
+                        //           child: Image.asset(
+                        //             'images/klogo.png',
+                        //             height: 50.0,
+                        //             width: 50.0,
+                        //           ),
+                        //         )
+                        //       ],
+                        //     ),
+                        //     style: ElevatedButton.styleFrom(
+                        //         primary: Color(0xfffeea0d),
+                        //         minimumSize: Size(100, 45),
+                        //         shape: RoundedRectangleBorder(
+                        //             borderRadius: BorderRadius.circular(16.0))),
+                        //     onPressed: () {},
+                        //   ),
+                        //   shape: RoundedRectangleBorder(
+                        //       borderRadius:
+                        //           BorderRadius.all(Radius.circular(16.0))),
+                        // )
+                      ],
+                    ),
                   ),
                 ),
               ),
