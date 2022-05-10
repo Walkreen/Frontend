@@ -1,5 +1,5 @@
 import 'package:capstone/MainScreen/HomePage.dart';
-import 'package:capstone/MainScreen/MissionPage.dart';
+import 'package:capstone/MainScreen/Mission/MissionPage.dart';
 import 'package:capstone/MainScreen/SettingPage.dart';
 import 'package:flutter/material.dart';
 
