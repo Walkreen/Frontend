@@ -26,29 +26,31 @@ class _MissionPageState extends State<MissionPage> {
             ],
             backgroundColor: Color(0xFF007F4A),
             automaticallyImplyLeading: false,
-            title:  const Center(child: Text("\t\t\t\t\t\t  Mission",
+            title:  const Center(child: Text("\t\t\t\t\t\t  미션",
             style: TextStyle(
               fontSize: 22.0
             ),)),
             bottom: TabBar(
               indicatorSize: TabBarIndicatorSize.label,
+              indicatorColor: Colors.white,
+              indicatorWeight: 3,
               tabs: [
                 Container(
-                  height: 30.0,
+                  height: 35.0,
                   child: Text("시작 가능",
                   style: TextStyle(
                     fontSize: 18.0
                   ),),
                 ),
                 Container(
-                  height: 30.0,
+                  height: 35.0,
                   child: Text("진행중",
                     style: TextStyle(
                         fontSize: 18.0
                     ),),
                 ),
                 Container(
-                  height: 30.0,
+                  height: 35.0,
                   child: Text("완료",
                     style: TextStyle(
                         fontSize: 18.0
