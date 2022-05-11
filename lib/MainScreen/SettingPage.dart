@@ -12,7 +12,7 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text("setting Page",
+        child: Text("user Page",
           style: TextStyle(
               fontSize: 20.0
           ),),

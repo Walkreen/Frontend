@@ -1,5 +1,5 @@
 import 'package:capstone/MainScreen/HomePage.dart';
-import 'package:capstone/MainScreen/MissionPage.dart';
+import 'package:capstone/MainScreen/Mission/MissionPage.dart';
 import 'package:capstone/MainScreen/SettingPage.dart';
 import 'package:flutter/material.dart';
 
@@ -44,15 +44,15 @@ class _MainPageState extends State<MainPage> {
                 tabs: [
                   Tab(
                     icon: Icon(Icons.wb_incandescent),
-                    text: 'Mission',
+                    text: '미션',
                   ),
                   Tab(
                     icon: Icon(Icons.home),
-                    text: 'Home',
+                    text: '홈',
                   ),
                   Tab(
-                    icon: Icon(Icons.settings),
-                    text: 'Setting',
+                    icon: Icon(Icons.people_alt),
+                    text: '내정보',
                   )
                 ]),
           ),
