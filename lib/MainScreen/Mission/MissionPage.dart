@@ -55,6 +55,7 @@ class _MissionPageState extends State<MissionPage> {
                     style: TextStyle(
                         fontSize: 18.0
                     ),),
+
                 ),
               ],
             ),
