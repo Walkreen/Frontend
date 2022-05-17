@@ -16,6 +16,14 @@ class _JoinPage1State extends State<JoinPage1> {
   final TextEditingController _controllerPW1 = TextEditingController();
   final TextEditingController _controllerPW2 = TextEditingController();
   bool _isVisible = false;
+  bool _isEmailValid = false;
+
+  // nextEditableTextFocus
+  void nextEditableTextFocus() {
+    do {
+      FocusScope.of(context).nextFocus();
+    } while (FocusScope.of(context).focusedChild?.context?.widget is! EditableText);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,35 +59,19 @@ class _JoinPage1State extends State<JoinPage1> {
                             height: 40.0,
                           ),
                           TextFormField(
+                            onEditingComplete: () {
+                              if (!_isVisible) {
+                                _isEmailValid =
+                                    _duplicateCheck(_controllerID.text);
+                                _isVisible = true;
+                              }
+                            },
                             controller: _controllerID,
                             decoration: InputDecoration(
                               hintText: '이메일을 입력하세요',
                               labelText: '이메일',
                               labelStyle: const TextStyle(color: Colors.black),
                               contentPadding: const EdgeInsets.all(10.0),
-                              suffix: ElevatedButton(
-                                onPressed: () {
-                                  if (_controllerID.text == "capstone@naver.com") {
-                                    setState(() {
-                                      _isVisible = true;
-                                    });
-                                  } else {
-                                    setState(() {
-                                      _isVisible = false;
-                                      _duplicateCheck(context);
-                                    });
-                                  }
-                                },
-                                child: const Text(
-                                  '중복확인',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                    primary: const Color(0xFF007F4A),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0))),
-                              ),
                               focusedBorder: const OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(5.0)),
@@ -163,45 +155,68 @@ void showToast1() {
       toastLength: Toast.LENGTH_SHORT);
 }
 
-void _duplicateCheck(BuildContext context) {
-  showDialog(
-      context: context,
-      //Dialog를 제외한 다른 화면 터치 x
-      barrierDismissible: false,
-      builder: (BuildContext text) {
-        return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-          //Dialog 제목
-          title: const Text(
-            '\t이메일이 중복되지 않습니다.\t',
-            style: TextStyle(fontSize: 15.0),
-          ),
-          //Dialog 내용 입력
-          content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
-                SizedBox(
-                  height: 20.0,
-                ),
-                Text(
-                  '\t사용 가능한 이메일입니다.\t',
-                  style: TextStyle(fontSize: 15.0),
-                )
-              ]),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('사용하기')),
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('아니요'))
-          ],
-        );
-      });
+bool _duplicateCheck(String text) {
+
+  // String message;
+  // MaterialColor messageColor;
+  // if (text == null) {
+  //   message = "이미 존재하는 이메일입니다";
+  //   messageColor = Colors.red;
+  // }
+  // else {
+  //   message = "사용 가능한 이메일입니다";
+  //   messageColor = Colors.green;
+  // }
+  //
+  // return Text(
+  //     message,
+  //     style: TextStyle(
+  //         color: messageColor,
+  //         fontSize: 10
+  //     )
+  // );
+  return true;
 }
+
+// void _duplicateCheck(BuildContext context) {
+//   showDialog(
+//       context: context,
+//       //Dialog를 제외한 다른 화면 터치 x
+//       barrierDismissible: false,
+//       builder: (BuildContext text) {
+//         return AlertDialog(
+//           shape:
+//               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+//           //Dialog 제목
+//           title: const Text(
+//             '\t이메일이 중복되지 않습니다.\t',
+//             style: TextStyle(fontSize: 15.0),
+//           ),
+//           //Dialog 내용 입력
+//           content: Column(
+//               mainAxisSize: MainAxisSize.min,
+//               crossAxisAlignment: CrossAxisAlignment.center,
+//               children: const [
+//                 SizedBox(
+//                   height: 20.0,
+//                 ),
+//                 Text(
+//                   '\t사용 가능한 이메일입니다.\t',
+//                   style: TextStyle(fontSize: 15.0),
+//                 )
+//               ]),
+//           actions: [
+//             TextButton(
+//                 onPressed: () {
+//                   Navigator.of(context).pop();
+//                 },
+//                 child: const Text('사용하기')),
+//             TextButton(
+//                 onPressed: () {
+//                   Navigator.of(context).pop();
+//                 },
+//                 child: const Text('아니요'))
+//           ],
+//         );
+//       });
+// }
