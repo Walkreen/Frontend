@@ -18,8 +18,6 @@ class _JoinPage1State extends State<JoinPage1> {
   bool _isVisible = false;
   bool _isEmailValid = false;
 
-  FocusNode textFocus = FocusNode();
-
   // nextEditableTextFocus
   void nextEditableTextFocus() {
     do {
@@ -66,7 +64,7 @@ class _JoinPage1State extends State<JoinPage1> {
                             text: '이메일',
                             keyboard: TextInputType.emailAddress,
                             controller: _controllerID,
-                            focusNode: textFocus,
+                            textInputAction: TextInputAction.next,
                             onEditingComplete: () {
                               if (!_isVisible) {
                                 setState(() {
@@ -74,8 +72,14 @@ class _JoinPage1State extends State<JoinPage1> {
                                   _isEmailValid =
                                       !_isEmailDuplicated(_controllerID.text);
                                 });
+                              } else {
+                                setState(() {
+                                  _isEmailValid = !_isEmailDuplicated(_controllerID.text);
+                                });
                               }
-                              textFocus.unfocus();
+                              if (_isEmailValid) {
+                                FocusScope.of(context).nextFocus();
+                              }
                             },
                           ),
                           const SizedBox(
@@ -104,6 +108,12 @@ class _JoinPage1State extends State<JoinPage1> {
                               name: '비밀번호',
                               text: '특수문자 포함 8자리 이상 입력하세요',
                               keyboard: TextInputType.text,
+                              textInputAction: TextInputAction.next,
+                              onEditingComplete: () {
+                                if (_controllerPW1.text.isNotEmpty) {
+                                  FocusScope.of(context).nextFocus();
+                                }
+                                },
                               controller: _controllerPW1,
                               obscureText: true),
                           const SizedBox(
@@ -113,6 +123,12 @@ class _JoinPage1State extends State<JoinPage1> {
                               name: '비밀번호 재확인',
                               text: '비밀번호를 다시 한번 입력하세요',
                               keyboard: TextInputType.text,
+                              textInputAction: TextInputAction.done,
+                              onEditingComplete: () {
+                                if (_controllerPW1.text.isNotEmpty) {
+                                  FocusScope.of(context).unfocus();
+                                }
+                              },
                               controller: _controllerPW2,
                               obscureText: true),
                           const SizedBox(

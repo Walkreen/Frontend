@@ -7,10 +7,12 @@ class MyTextField extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback? onEditingComplete;
   final FocusNode? focusNode;
+  final TextInputAction? textInputAction;
   bool obscureText;
   bool focus;
 
   MyTextField({
+    this.textInputAction,
     this.focusNode,
     this.onEditingComplete,
     required this.name,
