@@ -19,7 +19,7 @@ class MyButton extends StatelessWidget {
           primary: Color(0xFF007F4A),
           minimumSize: Size(400, 55),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0)
+            borderRadius: BorderRadius.circular(4.0)
           )
         ),
       ),
