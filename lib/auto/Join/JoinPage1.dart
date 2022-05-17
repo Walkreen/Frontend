@@ -22,7 +22,8 @@ class _JoinPage1State extends State<JoinPage1> {
   void nextEditableTextFocus() {
     do {
       FocusScope.of(context).nextFocus();
-    } while (FocusScope.of(context).focusedChild?.context?.widget is! EditableText);
+    } while (
+        FocusScope.of(context).focusedChild?.context?.widget is! EditableText);
   }
 
   @override
@@ -58,36 +59,19 @@ class _JoinPage1State extends State<JoinPage1> {
                           const SizedBox(
                             height: 40.0,
                           ),
-                          TextFormField(
+                          MyTextField(
+                            name: '이메일',
+                            text: '이메일',
+                            keyboard: TextInputType.emailAddress,
+                            controller: _controllerID,
                             onEditingComplete: () {
                               if (!_isVisible) {
+                                print("hello");
                                 _isEmailValid =
                                     _duplicateCheck(_controllerID.text);
                                 _isVisible = true;
                               }
                             },
-                            controller: _controllerID,
-                            decoration: InputDecoration(
-                              hintText: '이메일을 입력하세요',
-                              labelText: '이메일',
-                              labelStyle: const TextStyle(color: Colors.black),
-                              contentPadding: const EdgeInsets.all(10.0),
-                              focusedBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
-                                borderSide: BorderSide(
-                                    width: 1, color: Colors.redAccent),
-                              ),
-                              enabledBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
-                                borderSide: BorderSide(
-                                  width: 1.5,
-                                  color: Color(0xFF339E66),
-                                ),
-                              ),
-                            ),
-                            autofocus: true,
                           ),
                           Visibility(
                             visible: _isVisible,
@@ -107,8 +91,7 @@ class _JoinPage1State extends State<JoinPage1> {
                               text: '특수문자 포함 8자리 이상 입력하세요',
                               keyboard: TextInputType.text,
                               controller: _controllerPW1,
-                              obscureText: true
-                              ),
+                              obscureText: true),
                           const SizedBox(
                             height: 20.0,
                           ),
@@ -117,8 +100,7 @@ class _JoinPage1State extends State<JoinPage1> {
                               text: '비밀번호를 다시 한번 입력하세요',
                               keyboard: TextInputType.text,
                               controller: _controllerPW2,
-                              obscureText: true
-                          ),
+                              obscureText: true),
                           const SizedBox(
                             height: 40.0,
                           ),
@@ -156,7 +138,6 @@ void showToast1() {
 }
 
 bool _duplicateCheck(String text) {
-
   // String message;
   // MaterialColor messageColor;
   // if (text == null) {

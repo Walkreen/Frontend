@@ -5,20 +5,24 @@ class MyTextField extends StatelessWidget {
   final String text;
   final TextInputType keyboard;
   final TextEditingController controller;
+  final VoidCallback? onEditingComplete;
   bool obscureText;
   bool focus;
 
-  MyTextField(
-      {required this.name,
-      required this.text,
-      required this.keyboard,
-      required this.controller,
-      this.obscureText = false,
-      this.focus = false});
+  MyTextField({
+    this.onEditingComplete,
+    required this.name,
+    required this.text,
+    required this.keyboard,
+    required this.controller,
+    this.obscureText = false,
+    this.focus = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onEditingComplete: onEditingComplete,
       controller: controller,
       decoration: InputDecoration(
         labelText: name,
