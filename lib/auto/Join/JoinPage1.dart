@@ -73,6 +73,9 @@ class _JoinPage1State extends State<JoinPage1> {
                               }
                             },
                           ),
+                          const SizedBox(
+                            height: 5.0,
+                          ),
                           Visibility(
                             visible: _isVisible,
                             child: const Text(
