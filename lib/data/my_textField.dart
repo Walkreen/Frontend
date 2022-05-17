@@ -6,10 +6,12 @@ class MyTextField extends StatelessWidget {
   final TextInputType keyboard;
   final TextEditingController controller;
   final VoidCallback? onEditingComplete;
+  final FocusNode? focusNode;
   bool obscureText;
   bool focus;
 
   MyTextField({
+    this.focusNode,
     this.onEditingComplete,
     required this.name,
     required this.text,
@@ -22,6 +24,7 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      focusNode: focusNode,
       onEditingComplete: onEditingComplete,
       controller: controller,
       decoration: InputDecoration(

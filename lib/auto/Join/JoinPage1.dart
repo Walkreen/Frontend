@@ -18,6 +18,8 @@ class _JoinPage1State extends State<JoinPage1> {
   bool _isVisible = false;
   bool _isEmailValid = false;
 
+  FocusNode textFocus = FocusNode();
+
   // nextEditableTextFocus
   void nextEditableTextFocus() {
     do {
@@ -64,13 +66,16 @@ class _JoinPage1State extends State<JoinPage1> {
                             text: '이메일',
                             keyboard: TextInputType.emailAddress,
                             controller: _controllerID,
+                            focusNode: textFocus,
                             onEditingComplete: () {
                               if (!_isVisible) {
-                                print("hello");
-                                _isEmailValid =
-                                    _duplicateCheck(_controllerID.text);
-                                _isVisible = true;
+                                setState(() {
+                                  _isVisible = true;
+                                  _isEmailValid =
+                                      !_isEmailDuplicated(_controllerID.text);
+                                });
                               }
+                              textFocus.unfocus();
                             },
                           ),
                           const SizedBox(
@@ -78,7 +83,13 @@ class _JoinPage1State extends State<JoinPage1> {
                           ),
                           Visibility(
                             visible: _isVisible,
-                            child: const Text(
+                            child: _isEmailValid ? const Text(
+                              '사용 가능한 이메일입니다.',
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                color: Colors.green,
+                              ),
+                            ) : const Text(
                               '동일한 이메일이 존재합니다.',
                               style: TextStyle(
                                 fontSize: 12.0,
@@ -96,7 +107,7 @@ class _JoinPage1State extends State<JoinPage1> {
                               controller: _controllerPW1,
                               obscureText: true),
                           const SizedBox(
-                            height: 20.0,
+                            height: 25.0,
                           ),
                           MyTextField(
                               name: '비밀번호 재확인',
@@ -140,26 +151,9 @@ void showToast1() {
       toastLength: Toast.LENGTH_SHORT);
 }
 
-bool _duplicateCheck(String text) {
-  // String message;
-  // MaterialColor messageColor;
-  // if (text == null) {
-  //   message = "이미 존재하는 이메일입니다";
-  //   messageColor = Colors.red;
-  // }
-  // else {
-  //   message = "사용 가능한 이메일입니다";
-  //   messageColor = Colors.green;
-  // }
-  //
-  // return Text(
-  //     message,
-  //     style: TextStyle(
-  //         color: messageColor,
-  //         fontSize: 10
-  //     )
-  // );
-  return true;
+bool _isEmailDuplicated(String text) {
+  if (text == "chanho") return false;
+  else return true;
 }
 
 // void _duplicateCheck(BuildContext context) {
