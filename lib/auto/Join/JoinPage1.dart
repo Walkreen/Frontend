@@ -24,6 +24,7 @@ class _JoinPage1State extends State<JoinPage1> {
 
   final validPW = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$');
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +60,7 @@ class _JoinPage1State extends State<JoinPage1> {
                           ),
                           MyTextField(
                             name: '이메일',
-                            text: '이메일',
+                            text: '이메일을 입력해주세요.',
                             keyboard: TextInputType.emailAddress,
                             controller: _controllerID,
                             textInputAction: TextInputAction.next,
@@ -176,15 +177,10 @@ class _JoinPage1State extends State<JoinPage1> {
                           ),
                           MyButton(
                               buttonName: '계속하기',
-                              onPressed: () {
-                                if (_controllerPW1.text !=
-                                    _controllerPW2.text) {
-                                  showToast1();
-                                } else {
-                                  Navigator.pushNamed(context, '/SecondJoin');
-                                }
-                              })
-                        ],
+                              onPressed: (_isEmailValid && !_isVisiblePW1 && !_isVisiblePW2) ? () {
+                                Navigator.pushNamed(context, '/SecondJoin');
+                              }: null,
+                          )],
                       ),
                     ],
                   ),
@@ -194,17 +190,6 @@ class _JoinPage1State extends State<JoinPage1> {
           ),
         ));
   }
-}
-
-void showToast1() {
-  Fluttertoast.showToast(
-      msg: '비밀번호가 서로 다릅니다.',
-      gravity: ToastGravity.BOTTOM,
-      //toast 위치 지정
-      backgroundColor: Color(0xFF036635),
-      fontSize: 20.0,
-      textColor: Colors.white,
-      toastLength: Toast.LENGTH_SHORT);
 }
 
 bool _isEmailDuplicated(String text) {
