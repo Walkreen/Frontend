@@ -1,24 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MyTextField extends StatelessWidget {
   final String name;
   final String text;
   final TextInputType keyboard;
   final TextEditingController controller;
+  final VoidCallback? onEditingComplete;
+  final FocusNode? focusNode;
+  final TextInputAction? textInputAction;
   bool obscureText;
   bool focus;
 
-  MyTextField(
-      {required this.name,
-      required this.text,
-      required this.keyboard,
-      required this.controller,
-      this.obscureText = false,
-      this.focus = false});
+  MyTextField({
+    this.textInputAction,
+    this.focusNode,
+    this.onEditingComplete,
+    required this.name,
+    required this.text,
+    required this.keyboard,
+    required this.controller,
+    this.obscureText = false,
+    this.focus = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      focusNode: focusNode,
+      onEditingComplete: onEditingComplete,
       controller: controller,
       decoration: InputDecoration(
         labelText: name,
