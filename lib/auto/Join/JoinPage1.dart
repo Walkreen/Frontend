@@ -2,6 +2,7 @@ import 'package:capstone/data/my_button.dart';
 import 'package:capstone/data/my_textField.dart';
 import 'package:capstone/data/title_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class JoinPage1 extends StatefulWidget {
@@ -15,16 +16,16 @@ class _JoinPage1State extends State<JoinPage1> {
   final TextEditingController _controllerID = TextEditingController();
   final TextEditingController _controllerPW1 = TextEditingController();
   final TextEditingController _controllerPW2 = TextEditingController();
-  bool _isVisible = false;
+  bool _isVisibleEmail = false;
+  bool _isVisiblePW1 = false;
+  bool _isVisiblePW2 = false;
   bool _isEmailValid = false;
+  bool _isPW1Valid = false;
 
-  // nextEditableTextFocus
-  void nextEditableTextFocus() {
-    do {
-      FocusScope.of(context).nextFocus();
-    } while (
-        FocusScope.of(context).focusedChild?.context?.widget is! EditableText);
-  }
+  final validNumbers = RegExp(r'(\d+)');
+  final validAlphabet = RegExp(r'[a-zA-Z]');
+  final validSpecial = RegExp(r'^[a-zA-Z0-9 ]+$');
+  final validPW = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$');
 
   @override
   Widget build(BuildContext context) {
@@ -66,17 +67,14 @@ class _JoinPage1State extends State<JoinPage1> {
                             controller: _controllerID,
                             textInputAction: TextInputAction.next,
                             onEditingComplete: () {
-                              if (!_isVisible) {
-                                setState(() {
-                                  _isVisible = true;
-                                  _isEmailValid =
-                                      !_isEmailDuplicated(_controllerID.text);
-                                });
-                              } else {
-                                setState(() {
-                                  _isEmailValid = !_isEmailDuplicated(_controllerID.text);
-                                });
+                              if (!_isVisibleEmail) {
+                                _isVisibleEmail = true;
                               }
+                                _isEmailValid = !_isEmailDuplicated(_controllerID.text);
+                              setState(() {
+                                _isVisibleEmail;
+                                _isEmailValid;
+                              });
                               if (_isEmailValid) {
                                 FocusScope.of(context).nextFocus();
                               }
@@ -86,7 +84,7 @@ class _JoinPage1State extends State<JoinPage1> {
                             height: 5.0,
                           ),
                           Visibility(
-                            visible: _isVisible,
+                            visible: _isVisibleEmail,
                             child: _isEmailValid ? const Text(
                               '사용 가능한 이메일입니다.',
                               style: TextStyle(
@@ -106,16 +104,41 @@ class _JoinPage1State extends State<JoinPage1> {
                           ),
                           MyTextField(
                               name: '비밀번호',
-                              text: '특수문자 포함 8자리 이상 입력하세요',
+                              text: '영문 대소문자, 숫자, 특수문자 포함 8자리 이상',
                               keyboard: TextInputType.text,
                               textInputAction: TextInputAction.next,
                               onEditingComplete: () {
-                                if (_controllerPW1.text.isNotEmpty) {
+                                final input = _controllerPW1.text;
+                                _isPW1Valid = input.length >= 8
+                                && validPW.hasMatch(input);
+
+                                if (_isPW1Valid){
+                                  _isVisiblePW1 = false;
                                   FocusScope.of(context).nextFocus();
+                                } else {
+                                  _isVisiblePW1 = true;
                                 }
+
+                                setState(() {
+                                  _isVisiblePW1;
+                                });
+                                
                                 },
                               controller: _controllerPW1,
                               obscureText: true),
+                          const SizedBox(
+                            height: 5.0,
+                          ),
+                          Visibility(
+                            visible: _isVisiblePW1,
+                            child: const Text(
+                              '잘못된 형식의 비밀번호입니다.',
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
                           const SizedBox(
                             height: 25.0,
                           ),
@@ -125,12 +148,32 @@ class _JoinPage1State extends State<JoinPage1> {
                               keyboard: TextInputType.text,
                               textInputAction: TextInputAction.done,
                               onEditingComplete: () {
-                                if (_controllerPW1.text.isNotEmpty) {
+                                if (_controllerPW2.text.isNotEmpty && (_controllerPW1.text == _controllerPW2.text)) {
+                                  _isVisiblePW2 = false;
                                   FocusScope.of(context).unfocus();
+                                } else {
+                                    _isVisiblePW2 = true;
                                 }
+
+                                setState(() {
+                                  _isVisiblePW2;
+                                });
                               },
                               controller: _controllerPW2,
                               obscureText: true),
+                          const SizedBox(
+                            height: 5.0,
+                          ),
+                          Visibility(
+                            visible: _isVisiblePW2,
+                            child: const Text(
+                              '비밀번호가 일치하지 않습니다.',
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
                           const SizedBox(
                             height: 40.0,
                           ),
