@@ -22,9 +22,6 @@ class _JoinPage1State extends State<JoinPage1> {
   bool _isEmailValid = false;
   bool _isPW1Valid = false;
 
-  final validNumbers = RegExp(r'(\d+)');
-  final validAlphabet = RegExp(r'[a-zA-Z]');
-  final validSpecial = RegExp(r'^[a-zA-Z0-9 ]+$');
   final validPW = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$');
 
   @override
