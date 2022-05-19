@@ -21,6 +21,7 @@ class _JoinPage1State extends State<JoinPage1> {
   bool _isVisiblePW2 = false;
   bool _isEmailValid = false;
   bool _isPW1Valid = false;
+  bool _isPW2Valid = false;
 
   final validPW = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$');
 
@@ -148,6 +149,7 @@ class _JoinPage1State extends State<JoinPage1> {
                               onEditingComplete: () {
                                 if (_controllerPW2.text.isNotEmpty && (_controllerPW1.text == _controllerPW2.text)) {
                                   _isVisiblePW2 = false;
+                                  _isPW2Valid = true;
                                   FocusScope.of(context).unfocus();
                                 } else {
                                     _isVisiblePW2 = true;
@@ -155,6 +157,7 @@ class _JoinPage1State extends State<JoinPage1> {
 
                                 setState(() {
                                   _isVisiblePW2;
+                                  _isPW2Valid;
                                 });
                               },
                               controller: _controllerPW2,
@@ -177,7 +180,7 @@ class _JoinPage1State extends State<JoinPage1> {
                           ),
                           MyButton(
                               buttonName: '계속하기',
-                              onPressed: (_isEmailValid && !_isVisiblePW1 && !_isVisiblePW2) ? () {
+                              onPressed: (_isEmailValid && _isPW1Valid && _isPW2Valid) ? () {
                                 Navigator.pushNamed(context, '/SecondJoin');
                               }: null,
                           )],
