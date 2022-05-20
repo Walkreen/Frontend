@@ -11,11 +11,36 @@ class JoinPage2 extends StatefulWidget {
 }
 
 class _JoinPage2State extends State<JoinPage2> {
-  TextEditingController _controllerName = TextEditingController();
-  TextEditingController _controllerNickName = TextEditingController();
+  late TextEditingController _controllerName;
+  late TextEditingController _controllerNickName;
   bool _isVisibleNickName = false;
   bool _isNickNameValid = false;
   bool _isNameValid = false;
+  bool _isButtonValid = false;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controllerName = TextEditingController();
+    _controllerNickName = TextEditingController();
+
+    _controllerName.addListener(() {
+      final isButtonValid = _controllerName.text.isNotEmpty && _isNickNameValid;
+      setState(() {
+        _isButtonValid = isButtonValid;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controllerName.dispose();
+    _controllerNickName.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +50,7 @@ class _JoinPage2State extends State<JoinPage2> {
           elevation: 0.0,
           backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(color: Colors.black //색변경
-              ),
+          ),
         ),
         body: GestureDetector(
           onTap: () {
@@ -51,22 +76,25 @@ class _JoinPage2State extends State<JoinPage2> {
                             height: 40.0,
                           ),
                           MyTextField(
-                              name: '이름',
-                              text: '이름을 입력하세요',
-                              keyboard: TextInputType.name,
-                              controller: _controllerName,
-                              textInputAction: TextInputAction.next,
-                              onEditingComplete: () {
-                                if(_controllerName.text.isNotEmpty) {
-                                  _isNameValid = true;
-                                }
-                                setState(() {
-                                  _isNameValid;
-                                });
-                                if(_isNameValid) {
-                                  FocusScope.of(context).nextFocus();
-                                }
-                              },),
+                            name: '이름',
+                            text: '이름을 입력하세요',
+                            keyboard: TextInputType.name,
+                            controller: _controllerName,
+                            textInputAction: TextInputAction.next,
+                            onEditingComplete: () {
+                              if(_controllerName.text.isNotEmpty) {
+                                _isNameValid = true;
+                              }
+
+                              _isButtonValid = _isNameValid && _isNickNameValid;
+                              setState(() {
+                                _isNameValid;
+                                _isButtonValid;
+                              });
+                              if(_isNameValid) {
+                                FocusScope.of(context).nextFocus();
+                              }
+                            },),
                           const SizedBox(
                             height: 20.0,
                           ),
@@ -81,9 +109,11 @@ class _JoinPage2State extends State<JoinPage2> {
                                 _isVisibleNickName = true;
                               }
                               _isNickNameValid = !_isEmailDuplicated(_controllerNickName.text);
+                              _isButtonValid = _isNameValid && _isNickNameValid;
                               setState(() {
                                 _isVisibleNickName;
                                 _isNickNameValid;
+                                _isButtonValid;
                               });
                               if (_isNickNameValid) {
                                 FocusScope.of(context).unfocus();
@@ -118,10 +148,10 @@ class _JoinPage2State extends State<JoinPage2> {
                             height: 30.0,
                           ),
                           MyButton(
-                              buttonName: '계속하기',
-                              onPressed: (_isNameValid && _isNickNameValid)? () {
-                                Navigator.pushNamed(context, '/LastJoin');
-                              }: null,
+                            buttonName: '계속하기',
+                            onPressed: (_isButtonValid)? () {
+                              Navigator.pushNamed(context, '/LastJoin');
+                            }: null,
                           )
                         ],
                       ),

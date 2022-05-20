@@ -13,18 +13,54 @@ class JoinPage1 extends StatefulWidget {
 }
 
 class _JoinPage1State extends State<JoinPage1> {
-  final TextEditingController _controllerID = TextEditingController();
-  final TextEditingController _controllerPW1 = TextEditingController();
-  final TextEditingController _controllerPW2 = TextEditingController();
+  late TextEditingController _controllerID;
+  late TextEditingController _controllerPW1;
+  late TextEditingController _controllerPW2;
   bool _isVisibleEmail = false;
   bool _isVisiblePW1 = false;
   bool _isVisiblePW2 = false;
   bool _isEmailValid = false;
   bool _isPW1Valid = false;
   bool _isPW2Valid = false;
+  bool _isButtonValid = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _controllerID = TextEditingController();
+    _controllerPW1 = TextEditingController();
+    _controllerPW2 = TextEditingController();
+    _controllerID.addListener(() {
+      setState(() {
+        _isButtonValid = false;
+      });
+    });
+
+    _controllerPW1.addListener(() {
+      setState(() {
+        _isButtonValid = false;
+      });
+    });
+
+    _controllerPW2.addListener(() {
+      setState(() {
+        _isButtonValid = false;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controllerID.dispose();
+    _controllerPW1.dispose();
+    _controllerPW2.dispose();
+  }
 
   final validPW = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$');
-
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +70,7 @@ class _JoinPage1State extends State<JoinPage1> {
           elevation: 0.0,
           backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(color: Colors.black //Icon 색변경
-              ),
+          ),
         ),
         body: GestureDetector(
           onTap: () {
@@ -69,10 +105,12 @@ class _JoinPage1State extends State<JoinPage1> {
                               if (!_isVisibleEmail) {
                                 _isVisibleEmail = true;
                               }
-                                _isEmailValid = !_isEmailDuplicated(_controllerID.text);
+                              _isEmailValid = !_isEmailDuplicated(_controllerID.text);
+                              _isButtonValid = _isEmailValid && _isPW1Valid && _isPW2Valid;
                               setState(() {
                                 _isVisibleEmail;
                                 _isEmailValid;
+                                _isButtonValid;
                               });
                               if (_isEmailValid) {
                                 FocusScope.of(context).nextFocus();
@@ -109,8 +147,12 @@ class _JoinPage1State extends State<JoinPage1> {
                               onEditingComplete: () {
                                 final input = _controllerPW1.text;
                                 _isPW1Valid = input.length >= 8
-                                && validPW.hasMatch(input);
+                                    && validPW.hasMatch(input);
 
+
+                                if(_controllerPW1.text != _controllerPW2) {
+                                  _isPW2Valid = false;
+                                }
                                 if (_isPW1Valid){
                                   _isVisiblePW1 = false;
                                   FocusScope.of(context).nextFocus();
@@ -118,11 +160,14 @@ class _JoinPage1State extends State<JoinPage1> {
                                   _isVisiblePW1 = true;
                                 }
 
+                                _isButtonValid = _isEmailValid && _isPW1Valid && _isPW2Valid;
                                 setState(() {
                                   _isVisiblePW1;
+                                  _isButtonValid;
+                                  _isPW2Valid;
                                 });
-                                
-                                },
+
+                              },
                               controller: _controllerPW1,
                               obscureText: true),
                           const SizedBox(
@@ -152,12 +197,16 @@ class _JoinPage1State extends State<JoinPage1> {
                                   _isPW2Valid = true;
                                   FocusScope.of(context).unfocus();
                                 } else {
-                                    _isVisiblePW2 = true;
+                                  _isVisiblePW2 = true;
+                                  _isPW2Valid = false;
                                 }
+
+                                _isButtonValid = _isEmailValid && _isPW1Valid && _isPW2Valid;
 
                                 setState(() {
                                   _isVisiblePW2;
                                   _isPW2Valid;
+                                  _isButtonValid;
                                 });
                               },
                               controller: _controllerPW2,
@@ -179,10 +228,10 @@ class _JoinPage1State extends State<JoinPage1> {
                             height: 40.0,
                           ),
                           MyButton(
-                              buttonName: '계속하기',
-                              onPressed: (_isEmailValid && _isPW1Valid && _isPW2Valid) ? () {
-                                Navigator.pushNamed(context, '/SecondJoin');
-                              }: null,
+                            buttonName: '계속하기',
+                            onPressed: (_isButtonValid) ? () {
+                              Navigator.pushNamed(context, '/SecondJoin');
+                            }: null,
                           )],
                       ),
                     ],
