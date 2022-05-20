@@ -18,7 +18,6 @@ class _JoinPage2State extends State<JoinPage2> {
   bool _isNameValid = false;
   bool _isButtonValid = false;
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -32,7 +31,14 @@ class _JoinPage2State extends State<JoinPage2> {
         _isButtonValid = isButtonValid;
       });
     });
+
+    _controllerNickName.addListener(() {
+      setState(() {
+        _isButtonValid = false;
+      });
+    });
   }
+
 
   @override
   void dispose() {
@@ -50,7 +56,7 @@ class _JoinPage2State extends State<JoinPage2> {
           elevation: 0.0,
           backgroundColor: Colors.transparent,
           iconTheme: const IconThemeData(color: Colors.black //색변경
-          ),
+              ),
         ),
         body: GestureDetector(
           onTap: () {
@@ -75,29 +81,7 @@ class _JoinPage2State extends State<JoinPage2> {
                           const SizedBox(
                             height: 40.0,
                           ),
-                          MyTextField(
-                            name: '이름',
-                            text: '이름을 입력하세요',
-                            keyboard: TextInputType.name,
-                            controller: _controllerName,
-                            textInputAction: TextInputAction.next,
-                            onEditingComplete: () {
-                              if(_controllerName.text.isNotEmpty) {
-                                _isNameValid = true;
-                              }
 
-                              _isButtonValid = _isNameValid && _isNickNameValid;
-                              setState(() {
-                                _isNameValid;
-                                _isButtonValid;
-                              });
-                              if(_isNameValid) {
-                                FocusScope.of(context).nextFocus();
-                              }
-                            },),
-                          const SizedBox(
-                            height: 20.0,
-                          ),
                           MyTextField(
                             name: '닉네임',
                             text: '닉네임을 입력하세요',
@@ -108,7 +92,8 @@ class _JoinPage2State extends State<JoinPage2> {
                               if (!_isVisibleNickName) {
                                 _isVisibleNickName = true;
                               }
-                              _isNickNameValid = !_isEmailDuplicated(_controllerNickName.text);
+                              _isNickNameValid =
+                                  !_isEmailDuplicated(_controllerNickName.text);
                               _isButtonValid = _isNameValid && _isNickNameValid;
                               setState(() {
                                 _isVisibleNickName;
@@ -116,7 +101,7 @@ class _JoinPage2State extends State<JoinPage2> {
                                 _isButtonValid;
                               });
                               if (_isNickNameValid) {
-                                FocusScope.of(context).unfocus();
+                                FocusScope.of(context).nextFocus();
                               }
                             },
                           ),
@@ -125,19 +110,49 @@ class _JoinPage2State extends State<JoinPage2> {
                           ),
                           Visibility(
                             visible: _isVisibleNickName,
-                            child: _isNickNameValid ? const Text(
-                              '사용 가능한 닉네임입니다.',
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                color: Colors.green,
-                              ),
-                            ) : const Text(
-                              '동일한 닉네임 존재합니다.',
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                color: Colors.red,
-                              ),
-                            ),
+                            child: _isNickNameValid
+                                ? const Text(
+                                    '사용 가능한 닉네임입니다.',
+                                    style: TextStyle(
+                                      fontSize: 12.0,
+                                      color: Colors.green,
+                                    ),
+                                  )
+                                : const Text(
+                                    '동일한 닉네임 존재합니다.',
+                                    style: TextStyle(
+                                      fontSize: 12.0,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                          ),
+                          const SizedBox(
+                            height: 20.0,
+                          ),
+                          MyTextField(
+                            name: '이름',
+                            text: '이름을 입력하세요',
+                            keyboard: TextInputType.name,
+                            controller: _controllerName,
+                            textInputAction: TextInputAction.next,
+                            onEditingComplete: () {
+                              if (_controllerName.text.isNotEmpty) {
+                                _isNameValid = true;
+                              }
+
+                              _isButtonValid = _isNameValid && _isNickNameValid;
+                              setState(() {
+                                _isNameValid;
+                                _isButtonValid;
+                              });
+
+                              if (_isNameValid) {
+                                FocusScope.of(context).unfocus();
+                              }
+                            },
+                          ),
+                          const SizedBox(
+                            height: 20.0,
                           ),
                           const SizedBox(
                             height: 10.0,
@@ -149,9 +164,11 @@ class _JoinPage2State extends State<JoinPage2> {
                           ),
                           MyButton(
                             buttonName: '계속하기',
-                            onPressed: (_isButtonValid)? () {
-                              Navigator.pushNamed(context, '/LastJoin');
-                            }: null,
+                            onPressed: (_isButtonValid)
+                                ? () {
+                                    Navigator.pushNamed(context, '/LastJoin');
+                                  }
+                                : null,
                           )
                         ],
                       ),
@@ -165,8 +182,9 @@ class _JoinPage2State extends State<JoinPage2> {
   }
 
   bool _isEmailDuplicated(String text) {
-    if (text == "chanho") return false;
-    else return true;
+    if (text == "chanho")
+      return false;
+    else
+      return true;
   }
-
 }
