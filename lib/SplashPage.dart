@@ -23,10 +23,14 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-      splash: Icons.home,
+      splash: Image.asset(
+        'images/mainLogo.png',
+        width: 300,
+      ),
       duration: 3000,
-      backgroundColor: Color(0xFF007F4A),
+      backgroundColor: Color(0xFFFFFFFF),
       splashTransition: SplashTransition.fadeTransition,
+      splashIconSize: double.maxFinite,
       nextScreen: IntroPage(),
     );
   }
