@@ -33,25 +33,13 @@ class _IntroPageState extends State<IntroPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(
-                          height: 60.0,
+                          height: 100.0,
                         ),
                         TitleText(
                             text: '지구를 위한 발걸음\n'
                                 '그 첫 단계입니다!'),
                         const SizedBox(
-                          height: 30.0,
-                        ),
-
-                        Center(
-                          child: Image.asset(
-                            'images/mainLogo.png',
-                            width: 250,
-                            height: 250,
-                          ),
-                        ),
-
-                        const SizedBox(
-                          height: 50.0,
+                          height: 300.0,
                         ),
                         MyButton(
                             buttonName: '로그인',
