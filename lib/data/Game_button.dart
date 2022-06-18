@@ -12,6 +12,7 @@ class GameButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         child: Text(
+
           buttonName,
           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
