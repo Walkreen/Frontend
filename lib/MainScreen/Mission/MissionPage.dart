@@ -26,7 +26,8 @@ class _MissionPageState extends State<MissionPage> {
             ],
             backgroundColor: Color(0xFF007F4A),
             automaticallyImplyLeading: false,
-            title:  const Center(child: Text("\t\t\t\t\t\t  미션",
+            title:  const Center(
+                child: Text("\t\t\t\t\t\t  미션",
             style: TextStyle(
               fontSize: 22.0
             ),)),
