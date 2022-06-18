@@ -30,7 +30,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+
   json_annotation: ^4.5.0
+  flutter_unity_widget: ^4.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -39,7 +41,6 @@ dependencies:
   animated_splash_screen: ^1.2.0
   fluttertoast: ^8.0.8
   flutter_holo_date_picker: ^1.0.3
-
 
 
 dev_dependencies:
