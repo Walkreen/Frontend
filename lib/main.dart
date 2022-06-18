@@ -1,3 +1,4 @@
+import 'package:capstone/MainScreen/GamePage.dart';
 import 'package:capstone/MainScreen/HomePage.dart';
 import 'package:capstone/MainScreen/MainPage.dart';
 import 'package:capstone/SplashPage.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/' : (context) => SplashPage(),
         '/Intro' : (context) => IntroPage(),
-        '/Login' : (context) => LoginPage(),
+        '/Login' : (context) => GamePage(),
         '/FirstJoin' : (context) => JoinPage1(),
         '/SecondJoin' : (context) => JoinPage2(),
         '/LastJoin' : (context) => JoinPage3(),
