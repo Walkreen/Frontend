@@ -1,6 +1,7 @@
 import 'package:capstone/MainScreen/GamePage.dart';
 import 'package:capstone/MainScreen/HomePage.dart';
 import 'package:capstone/MainScreen/MainPage.dart';
+import 'package:capstone/MainScreen/Mission/MissionContent.dart';
 import 'package:capstone/SplashPage.dart';
 import 'package:capstone/auto/Join/JoinPage2.dart';
 import 'package:capstone/auto/Login/IntroPage.dart';
@@ -25,14 +26,14 @@ class MyApp extends StatelessWidget {
       routes: {
         '/' : (context) => SplashPage(),
         '/Intro' : (context) => IntroPage(),
-        '/Login' : (context) => GamePage(),
+        '/Login' : (context) => LoginPage(),
         '/FirstJoin' : (context) => JoinPage1(),
         '/SecondJoin' : (context) => JoinPage2(),
         '/LastJoin' : (context) => JoinPage3(),
         '/Main' : (context) => MainPage(),
+        '/Home' : (context) => HomePage(),
+        '/MissionContext' : (context) => MissionContentPage(),
       }
     );
   }
 }
-
-
