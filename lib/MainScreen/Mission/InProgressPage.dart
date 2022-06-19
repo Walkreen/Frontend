@@ -12,7 +12,7 @@ class _InProgressedPageState extends State<InProgressedPage> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text("In Progressed Mission Page",
+        child: Text("In Progressed mission Page",
           style: TextStyle(
               fontSize: 20.0
           ),),

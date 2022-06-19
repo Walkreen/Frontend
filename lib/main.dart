@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/' : (context) => SplashPage(),
         '/Intro' : (context) => IntroPage(),
-        '/Login' : (context) => GamePage(),
+        '/Login' : (context) => LoginPage(),
         '/FirstJoin' : (context) => JoinPage1(),
         '/SecondJoin' : (context) => JoinPage2(),
         '/LastJoin' : (context) => JoinPage3(),

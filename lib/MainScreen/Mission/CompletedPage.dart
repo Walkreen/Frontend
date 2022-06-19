@@ -12,7 +12,7 @@ class _CompletedPageState extends State<CompletedPage> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text("Completed Mission Page",
+        child: Text("Completed mission Page",
           style: TextStyle(
               fontSize: 20.0
           ),),

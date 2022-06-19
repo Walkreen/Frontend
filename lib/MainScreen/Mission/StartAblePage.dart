@@ -12,7 +12,7 @@ class _StartAblePageState extends State<StartAblePage> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text("Startable Mission Page",
+        child: Text("Startable mission Page",
           style: TextStyle(
               fontSize: 20.0
           ),),
