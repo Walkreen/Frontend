@@ -30,6 +30,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  build_runner: ^1.10.3
 
   json_annotation: ^4.5.0
   flutter_unity_widget: ^4.1.0
@@ -41,6 +42,10 @@ dependencies:
   animated_splash_screen: ^1.2.0
   fluttertoast: ^8.0.8
   flutter_holo_date_picker: ^1.0.3
+  openapi_generator_annotations: ^1.1.4
+
+  http: ^0.12.2
+
 
 
 dev_dependencies:
@@ -53,6 +58,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
+  openapi_generator: ^1.1.4
+  json_serializable: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

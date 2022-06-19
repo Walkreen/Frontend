@@ -18,6 +18,7 @@ class _InProgressedPageState extends State<InProgressedPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
 
         body: ListView.separated(
