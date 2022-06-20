@@ -1,20 +1,48 @@
+import 'package:capstone/api/mission/MissionResponse.dart';
 import 'package:flutter/material.dart';
 
+import '../../api/Config.dart';
+import '../../api/HttpController.dart';
 import '../../data/Game_button.dart';
+import '../../data/my_button.dart';
 
 class MissionContentPage extends StatefulWidget {
-  const MissionContentPage({Key? key}) : super(key: key);
+  final MissionResponse missionResponse;
+  final int status;
+
+  const MissionContentPage({Key? key, required this.missionResponse, required this.status}) : super(key: key);
 
   @override
   State<MissionContentPage> createState() => _MissionContentPageState();
 }
 
 class _MissionContentPageState extends State<MissionContentPage> {
-  String a = "컴퓨터 사용 안 할 때 코드 뽑기";
-  int joinCount = 10;
-  int point = 20;
-  String startDate = "시작 날짜";
-  String endDate = "끝나는 날짜";
+  MissionResponse _missionResponse = MissionResponse();
+
+  HttpController _httpController = HttpController();
+
+  String buttonName = "";
+  bool isButtonVisible = true;
+
+  String buttonUrl = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _missionResponse = widget.missionResponse;
+    if (widget.status == 0) {
+      buttonName = "참여하기";
+      buttonUrl = Config.baseURL + '/api/mission/join';
+    } else if (widget.status == 1) {
+      buttonName = "인증하기";
+      buttonUrl = Config.baseURL + '/api/mission/submit';
+    } else if (widget.status == 2) {
+      buttonName = "참여완료";
+      isButtonVisible = false;
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +54,13 @@ class _MissionContentPageState extends State<MissionContentPage> {
             style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold)),
         iconTheme: const IconThemeData(color: Colors.black //색변경
             ),
+        leading:  //<- leading 항목을 직접 추가
+        IconButton(
+          icon: Icon(Icons.arrow_back), // <- 아이콘도 동일한 것을 사용
+          onPressed: () {
+            Navigator.pop(context);     // <- 이전 페이지로 이동.
+          },
+        ),
       ),
       body: Column(
         children: [
@@ -39,11 +74,11 @@ class _MissionContentPageState extends State<MissionContentPage> {
                   width: 20.0,
                 ),
                 Container(
-                  width: 270,
+                  width: 240,
                   child: Text(
-                    a,
+                    _missionResponse.title!,
                     style:
-                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
                   ),
                 ),
                 SizedBox(
@@ -59,7 +94,7 @@ class _MissionContentPageState extends State<MissionContentPage> {
                 Container(
                   width: 50,
                   child: Text(
-                    "${joinCount}명",
+                    "${_missionResponse.people}명",
                     style: TextStyle(fontSize: 20.0),
                   ),
                 ),
@@ -86,19 +121,24 @@ class _MissionContentPageState extends State<MissionContentPage> {
                     width: 70.0,
                     child: Text(
                       "내용",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                   SizedBox(
                     width: 20.0,
                   ),
                   Container(
-                    width: 300,
+                    width: 250,
                     padding: EdgeInsets.only(right: 10.0),
-                    child: Text("북한산에서 플로깅을 진행합니다! 플로깅과 하이킹을 결합한 신개념 환경 보호 활동! " +
-                        "우리 플로깅 크루와 함께 흥겨운 하이킹, " +
-                        "보람찬 환경보호를 실천해요! 아아아아아아ㅏ앙아아아아아아아아아아아앙아아아아아아ㅏ앙아아아아아아아아아아아앙\n" +
-                        "전화번호) 031-8005-xxxx, xxxx"),
+                    child: Text(
+                      _missionResponse.contents!,
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
                   )
                 ],
               )),
@@ -112,15 +152,18 @@ class _MissionContentPageState extends State<MissionContentPage> {
                     width: 70.0,
                     child: Text(
                       "보상",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                   SizedBox(
                     width: 20.0,
                   ),
                   Container(
-                    width: 300,
-                    child: Text("${point}점"),
+                    width: 250,
+                    child: Text("${_missionResponse.reward}점"),
                   )
                 ],
               )),
@@ -134,15 +177,22 @@ class _MissionContentPageState extends State<MissionContentPage> {
                     width: 70.0,
                     child: Text(
                       "시작 시간",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                   SizedBox(
                     width: 20.0,
                   ),
                   Container(
-                    width: 300,
-                    child: Text("${startDate}"),
+                    width: 250,
+                    child: Text("${_missionResponse.startTime}",
+                        style: TextStyle(
+                          fontSize: 15,
+                        ),
+                    )
                   )
                 ],
               )),
@@ -156,15 +206,22 @@ class _MissionContentPageState extends State<MissionContentPage> {
                     width: 70.0,
                     child: Text(
                       "마감 시간",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                   SizedBox(
                     width: 20.0,
                   ),
                   Container(
-                    width: 300,
-                    child: Text("${endDate}"),
+                    width: 250,
+                    child: Text("${_missionResponse.endTime}",
+                        style: TextStyle(
+                          fontSize: 15,
+                        ),
+                    )
                   )
                 ],
               )),
@@ -174,11 +231,37 @@ class _MissionContentPageState extends State<MissionContentPage> {
           Container(
               padding: EdgeInsets.all(10.0),
               height: 70,
-              child: GameButton(
-                  buttonName: '버튼 이름',
-                  onPressed: () {
-                    Navigator.pop(context);
-                  })),
+              child: MyButton(
+                onPressed: (isButtonVisible)
+                ? () {
+                  var response;
+                  if (widget.status == 0) {
+                    response = _httpController.putWithAuthArg(
+                        buttonUrl, Config.jwtToken,
+                        {
+                          'mission': _missionResponse.missionId.toString(),
+                        });
+                  } else if (widget.status == 1) {
+                    response = _httpController.postWithAuthArg(
+                        buttonUrl, Config.jwtToken,
+                        {
+                          'mission': _missionResponse.missionId.toString(),
+                        });
+                  }
+                  response.then((value) {
+                    if (value == null) {
+                    } else {
+                      _missionResponse = MissionResponse.fromJson(value);
+                    }}).catchError((error) {
+                    print('error : $error');
+                  });
+                  setState(() {
+                    isButtonVisible = false;
+                  });
+              } : null,
+                buttonName: buttonName,
+              )
+          ),
         ],
       ),
     );

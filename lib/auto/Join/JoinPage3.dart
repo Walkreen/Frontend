@@ -1,7 +1,11 @@
+import 'package:capstone/api/Config.dart';
 import 'package:capstone/data/my_button.dart';
 import 'package:capstone/data/title_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
+
+import '../../api/HttpController.dart';
+import '../../api/user/UserResponse.dart';
 
 class JoinPage3 extends StatefulWidget {
   const JoinPage3({Key? key}) : super(key: key);
@@ -14,6 +18,12 @@ class _JoinPage3State extends State<JoinPage3> {
   bool _isFemaleSwitched = false;
   bool _isMaleSwitched = false;
   DateTime? _selectedDate;
+  bool _isButtonValid = false;
+
+  HttpController _httpController = HttpController();
+  UserResponse userResponse = UserResponse();
+
+  final String url = Config.baseURL + '/api/user/signup';
 
   @override
   Widget build(BuildContext context) {
@@ -150,6 +160,7 @@ class _JoinPage3State extends State<JoinPage3> {
                               onChange: (DateTime newDate, _) {
                                 setState(() {
                                   _selectedDate = newDate;
+                                  _isButtonValid = (_isMaleSwitched || _isFemaleSwitched);
                                 });
                                 print(_selectedDate);
                               },
@@ -165,9 +176,30 @@ class _JoinPage3State extends State<JoinPage3> {
                           ),
                           MyButton(
                               buttonName: '가입하기',
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/Main');
-                              })
+                              onPressed: (_isButtonValid)
+                                  ? () {
+                                String gender = "";
+                                if (_isFemaleSwitched) gender = "FEMALE";
+                                else if (_isMaleSwitched) gender = "MALE";
+                                Config.signUpRequest?.gender = gender;
+                                Config.signUpRequest?.birthday = _selectedDate?.toUtc().toIso8601String();
+
+                                var json = Config.signUpRequest!.toJson();
+
+                                var response = _httpController.postByJson(url, json);
+                                response.then((value) {
+                                  if (value == null) {
+                                  } else {
+                                    Navigator.pushNamed(context, '/Main');
+                                    userResponse = UserResponse.fromJson(value);
+                                    Config.jwtToken = userResponse.tokenResponse?.accessToken;
+                                  }
+                                }).catchError((error) {
+                                  print('error : $error');
+                                });
+                              }
+                              : null
+                          )
                         ],
                       ),
                     ],

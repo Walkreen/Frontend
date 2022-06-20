@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../api/Config.dart';
+import '../../api/HttpController.dart';
+import '../../api/mission/MissionResponse.dart';
+import '../../api/mission/PageMissionResponse.dart';
+import 'MissionContent.dart';
+
 class InProgressedPage extends StatefulWidget {
   const InProgressedPage({Key? key}) : super(key: key);
 
@@ -8,13 +14,37 @@ class InProgressedPage extends StatefulWidget {
 }
 
 class _InProgressedPageState extends State<InProgressedPage> {
-  @override
-  final List<String> title = <String>[
-    "현성이형 바보",
-    "용관이 짱",
-  ];
+  PageMissionResponse _pageMissionResponse = PageMissionResponse();
+  HttpController _httpController = HttpController();
+  List<String?> titleList = [];
+  List<int?> rewardList = <int>[];
+  int listLength = 0;
+  MissionResponse _missionResponse = MissionResponse();
 
-  final List<int> reward = <int>[40, 50];
+  final String url = Config.baseURL + '/api/mission/get?status=GOING';
+  final String buttonUrl = Config.baseURL + '/api/mission/submit?mission=';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    var response = _httpController.httpGetWithAuth(url, Config.jwtToken);
+    response.then((value) {
+      if (value == null) {
+      } else {
+        _pageMissionResponse = PageMissionResponse.fromJson(value);
+        _pageMissionResponse.missions?.forEach((element) {
+          print(element.toString());
+          titleList.add(element.title);
+          rewardList.add(element.reward);
+        });
+        setState(() {
+          listLength = titleList.length;
+        });
+      }}).catchError((error) {
+      print('error : $error');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +53,7 @@ class _InProgressedPageState extends State<InProgressedPage> {
 
         body: ListView.separated(
             padding: const EdgeInsets.symmetric(vertical: 30),
-            itemCount: title.length,
+            itemCount: listLength,
             separatorBuilder: (BuildContext context, int index) =>
             const Divider(thickness: 3),
             itemBuilder: (BuildContext context, int index) {
@@ -43,24 +73,48 @@ class _InProgressedPageState extends State<InProgressedPage> {
                             height: 50,
                           ),
                           SizedBox(
-                            width: 40.0,
+                            width: 15.0,
                           ),
                           Container(
                             width: 220,
-                            child: Text("${title[index]}"),
+                            child: Text(
+                                "${titleList[index]}",
+                                style: TextStyle(fontSize: 15)
+                            ),
                           ),
                           SizedBox(
-                            width: 20.0,
+                            width: 5.0,
                           ),
                           Container(
                             width: 50,
-                            child: Text("${reward[index]}"),
+                            child: Text(
+                              "${rewardList[index]}P",
+                              style: TextStyle(fontSize: 15),
+                            ),
                           ),
                         ],
                       )),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, '/SecondJoin');
+                  var response = _httpController.postWithAuth(
+                      buttonUrl + index.toString(), Config.jwtToken);
+                  response.then((value) {
+                    if (value == null) {
+                      print(buttonUrl + index.toString());
+                    } else {
+                      print("2");
+                      _missionResponse = MissionResponse.fromJson(value);
+                    }}).catchError((error) {
+                    print('error : $error');
+                  });
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          MissionContentPage(
+                            missionResponse: _pageMissionResponse.missions![index],
+                            status: 1,
+                          )
+                  )
+                  );
                 },
               );
             }));

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:capstone/MainScreen/HomePage.dart';
 import 'package:capstone/MainScreen/Mission/MissionPage.dart';
 import 'package:capstone/MainScreen/SettingPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -12,8 +15,25 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.immersive
+    );
+    SystemChrome.setSystemUIChangeCallback(
+            (systemOverlaysAreVisible) {
+              sleep(Duration(seconds:2));
+              return SystemChrome.setEnabledSystemUIMode(
+                  SystemUiMode.immersive
+              );
+            },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
+    return WillPopScope(child: DefaultTabController(
         length: 3,
         child: Scaffold(
           body: const TabBarView(
@@ -25,12 +45,12 @@ class _MainPageState extends State<MainPage> {
           ),
           bottomNavigationBar: Container(
             decoration: const BoxDecoration(
-              color: Colors.white,
-              boxShadow: [BoxShadow(
-                color: Colors.green,
-                spreadRadius: 1,
-                blurRadius: 1
-              )]
+                color: Colors.white,
+                boxShadow: [BoxShadow(
+                    color: Colors.green,
+                    spreadRadius: 1,
+                    blurRadius: 1
+                )]
             ),
             child: const TabBar(
                 indicatorSize: TabBarIndicatorSize.label,
@@ -56,6 +76,9 @@ class _MainPageState extends State<MainPage> {
                   )
                 ]),
           ),
-        ));
+        )),
+        onWillPop: () {
+          return Future(() => false);
+        });
   }
 }

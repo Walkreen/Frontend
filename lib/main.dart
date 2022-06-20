@@ -9,8 +9,10 @@ import 'package:capstone/auto/Join/JoinPage1.dart';
 import 'package:capstone/auto/Join/JoinPage3.dart';
 import 'package:flutter/material.dart';
 import 'package:capstone/auto/Login/LoginPage.dart';
+import 'package:flutter/services.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MyApp(
+));
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'WalkReenApp',
+      title: 'WalkreenApp',
       initialRoute: '/',
 
       // 페이지 별 route 할당 부분
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
         '/LastJoin' : (context) => JoinPage3(),
         '/Main' : (context) => MainPage(),
         '/Home' : (context) => HomePage(),
-        '/MissionContext' : (context) => MissionContentPage(),
+        '/Game' : (context) => GamePage(),
       }
     );
   }

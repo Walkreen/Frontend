@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
               GameButton(
                 buttonName: '게임 실행',
                 onPressed: () {
-                  Navigator.pushNamed(context, '/SecondJoin');
+                  Navigator.pushNamed(context, '/Game');
                 }
               )
             ],

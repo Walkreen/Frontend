@@ -3,6 +3,10 @@ import 'package:capstone/data/my_textField.dart';
 import 'package:capstone/data/title_text.dart';
 import 'package:flutter/material.dart';
 
+import '../../api/Config.dart';
+import '../../api/HttpController.dart';
+import '../../api/StringResponse.dart';
+
 class JoinPage2 extends StatefulWidget {
   const JoinPage2({Key? key}) : super(key: key);
 
@@ -17,6 +21,12 @@ class _JoinPage2State extends State<JoinPage2> {
   bool _isNickNameValid = false;
   bool _isNameValid = false;
   bool _isButtonValid = false;
+
+  HttpController _httpController = HttpController();
+  StringResponse stringResponse = StringResponse();
+
+  final String url = Config.baseURL + '/api/user/nickname';
+
 
   @override
   void initState() {
@@ -89,20 +99,34 @@ class _JoinPage2State extends State<JoinPage2> {
                             controller: _controllerNickName,
                             textInputAction: TextInputAction.next,
                             onEditingComplete: () {
+                              final input = _controllerNickName.text;
+
                               if (!_isVisibleNickName) {
                                 _isVisibleNickName = true;
                               }
-                              _isNickNameValid =
-                                  !_isEmailDuplicated(_controllerNickName.text);
+
+                              String inputUrl = url + "?nickname=" +input;
+
+                              var response =  _httpController.post(inputUrl);
+                              response.then((value) {
+                              if (value == null) {
+                                _isNickNameValid = false;
+                              } else {
+                                _isNickNameValid = true;
+                              }
+
                               _isButtonValid = _isNameValid && _isNickNameValid;
                               setState(() {
                                 _isVisibleNickName;
                                 _isNickNameValid;
                                 _isButtonValid;
                               });
+
                               if (_isNickNameValid) {
                                 FocusScope.of(context).nextFocus();
                               }
+
+                              });
                             },
                           ),
                           const SizedBox(
@@ -166,6 +190,8 @@ class _JoinPage2State extends State<JoinPage2> {
                             buttonName: '계속하기',
                             onPressed: (_isButtonValid)
                                 ? () {
+                                    Config.signUpRequest?.nickname = _controllerNickName.text;
+                                    Config.signUpRequest?.name = _controllerName.text;
                                     Navigator.pushNamed(context, '/LastJoin');
                                   }
                                 : null,
@@ -179,12 +205,5 @@ class _JoinPage2State extends State<JoinPage2> {
             ),
           ),
         ));
-  }
-
-  bool _isEmailDuplicated(String text) {
-    if (text == "chanho")
-      return false;
-    else
-      return true;
   }
 }
