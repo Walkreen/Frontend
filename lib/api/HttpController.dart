@@ -8,6 +8,7 @@ class HttpController {
 
   var client = http.Client();
 
+
   Future httpGet(String url) async {
     final response = await client.get(url);
 

@@ -8,4 +8,16 @@ class Config with ChangeNotifier {
   static String? jwtToken = "";
 
   static SignUpRequest? signUpRequest = SignUpRequest();
+
+  static int? xp = 0;
+
+  static String? email = "";
+
+  static String? name = "";
+
+  static String? nickname = "";
+
+  static String? gender = "";
+
+  static String? birthday = "";
 }

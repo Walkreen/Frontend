@@ -1,3 +1,4 @@
+import 'package:capstone/Calendar/CalendarPage.dart';
 import 'package:capstone/MainScreen/GamePage.dart';
 import 'package:capstone/MainScreen/HomePage.dart';
 import 'package:capstone/MainScreen/MainPage.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         '/Main' : (context) => MainPage(),
         '/Home' : (context) => HomePage(),
         '/Game' : (context) => GamePage(),
+        '/Calendar' : (context) => CalendarPage()
       }
     );
   }

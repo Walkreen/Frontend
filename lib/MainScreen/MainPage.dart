@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:capstone/MainScreen/HomePage.dart';
 import 'package:capstone/MainScreen/Mission/MissionPage.dart';
-import 'package:capstone/MainScreen/SettingPage.dart';
+import 'package:capstone/auto/UserPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -40,7 +40,7 @@ class _MainPageState extends State<MainPage> {
             children: [
               MissionPage(),
               HomePage(),
-              SettingPage(),
+              UserPage(),
             ],
           ),
           bottomNavigationBar: Container(

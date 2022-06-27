@@ -19,6 +19,7 @@ class _GamePageState extends State<GamePage>{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         key: _scaffoldKey,
         body: UnityWidget(

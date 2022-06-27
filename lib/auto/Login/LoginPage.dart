@@ -111,6 +111,12 @@ class _LoginPageState extends State<LoginPage> {
                                   Navigator.pushNamed(context, '/Main');
                                   userResponse = UserResponse.fromJson(value);
                                   Config.jwtToken = userResponse.tokenResponse?.accessToken;
+                                  Config.xp = userResponse?.accpoint;
+                                  Config.email = userResponse.email;
+                                  Config.name = userResponse.name;
+                                  Config.nickname = userResponse.nickname;
+                                  Config.gender = userResponse.gender;
+                                  Config.birthday = userResponse.birthday?.substring(0, 10);
                                 }
                               }).catchError((error) {
                                 print('error : $error');
