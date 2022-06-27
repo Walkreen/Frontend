@@ -1,3 +1,4 @@
+import 'package:capstone/Calendar/CalendarPage.dart';
 import 'package:capstone/MainScreen/Mission/CompletedPage.dart';
 import 'package:capstone/MainScreen/Mission/InProgressPage.dart';
 import 'package:capstone/MainScreen/Mission/StartAblePage.dart';
@@ -21,7 +22,12 @@ class _MissionPageState extends State<MissionPage> {
           child: AppBar(
             actions: [
               IconButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CalendarPage()
+                    )
+                    );
+                  },
                   icon: Icon(Icons.web))
             ],
             backgroundColor: Color(0xFF007F4A),

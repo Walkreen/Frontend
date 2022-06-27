@@ -1,3 +1,7 @@
+import 'package:capstone/api/Config.dart';
+import 'package:capstone/api/HttpController.dart';
+import 'package:capstone/api/user/LoginRequest.dart';
+import 'package:capstone/api/user/UserResponse.dart';
 import 'package:capstone/data/my_button.dart';
 import 'package:capstone/data/my_textField.dart';
 import 'package:capstone/data/title_text.dart';
@@ -14,6 +18,12 @@ class _LoginPageState extends State<LoginPage> {
   //controller 선언부분
   TextEditingController _controllerPWD = TextEditingController();
   TextEditingController _controllerID = TextEditingController();
+  HttpController _httpController = HttpController();
+  LoginRequest loginRequest = LoginRequest();
+  UserResponse userResponse = UserResponse();
+
+  final String url = Config.baseURL + '/api/user/login';
+
   bool _isVisible = false;
 
   @override
@@ -73,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                         Visibility(
                           visible: _isVisible,
                           child: const Text(
-                            '비밀번호가 일치하지 않습니다.',
+                            '회원정보가 일치하지 않습니다.',
                             style: TextStyle(
                               fontSize: 12.0,
                               color: Colors.red,
@@ -86,13 +96,31 @@ class _LoginPageState extends State<LoginPage> {
                         MyButton(
                             buttonName: '로그인',
                             onPressed: () {
-                              if (_controllerPWD.text != '1234') {
-                                setState(() {
-                                  _isVisible = true;
-                                });
-                              } else {
-                                Navigator.pushNamed(context, '/Main');
-                              }
+                              loginRequest.email = _controllerID.text;
+                              loginRequest.password = _controllerPWD.text;
+
+                              var json = loginRequest.toJson();
+
+                              var response = _httpController.postByJson(url, json);
+                              response.then((value) {
+                                if (value == null) {
+                                  setState(() {
+                                    _isVisible = true;
+                                  });
+                                } else {
+                                  Navigator.pushNamed(context, '/Main');
+                                  userResponse = UserResponse.fromJson(value);
+                                  Config.jwtToken = userResponse.tokenResponse?.accessToken;
+                                  Config.xp = userResponse?.accpoint;
+                                  Config.email = userResponse.email;
+                                  Config.name = userResponse.name;
+                                  Config.nickname = userResponse.nickname;
+                                  Config.gender = userResponse.gender;
+                                  Config.birthday = userResponse.birthday?.substring(0, 10);
+                                }
+                              }).catchError((error) {
+                                print('error : $error');
+                              });
                             }),
                         const SizedBox(
                           height: 5.0,

@@ -45,6 +45,9 @@ dependencies:
   openapi_generator_annotations: ^1.1.4
 
   http: ^0.12.2
+  provider: ^5.0.0
+  table_calendar: ^3.0.6
+  intl: 0.17.0
 
 
 
@@ -59,7 +62,6 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
   openapi_generator: ^1.1.4
-  json_serializable: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -1,9 +1,14 @@
+import 'package:capstone/api/Config.dart';
+import 'package:capstone/api/StringResponse.dart';
+import 'package:capstone/api/user/EmailRequest.dart';
 import 'package:capstone/data/my_button.dart';
 import 'package:capstone/data/my_textField.dart';
 import 'package:capstone/data/title_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+import '../../api/HttpController.dart';
 
 class JoinPage1 extends StatefulWidget {
   const JoinPage1({Key? key}) : super(key: key);
@@ -23,6 +28,13 @@ class _JoinPage1State extends State<JoinPage1> {
   bool _isPW1Valid = false;
   bool _isPW2Valid = false;
   bool _isButtonValid = false;
+
+  HttpController _httpController = HttpController();
+  EmailRequest emailRequest = EmailRequest();
+  StringResponse stringResponse = StringResponse();
+
+  final String url = Config.baseURL + '/api/user/exists';
+
 
   @override
   void initState() {
@@ -61,6 +73,7 @@ class _JoinPage1State extends State<JoinPage1> {
   }
 
   final validPW = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$');
+  final validEmail = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
   @override
   Widget build(BuildContext context) {
@@ -102,19 +115,33 @@ class _JoinPage1State extends State<JoinPage1> {
                             controller: _controllerID,
                             textInputAction: TextInputAction.next,
                             onEditingComplete: () {
+                              final input = _controllerID.text;
+                              bool _isEmailMatchForm = validEmail.hasMatch(input);
+
                               if (!_isVisibleEmail) {
                                 _isVisibleEmail = true;
                               }
-                              _isEmailValid = !_isEmailDuplicated(_controllerID.text);
-                              _isButtonValid = _isEmailValid && _isPW1Valid && _isPW2Valid;
-                              setState(() {
-                                _isVisibleEmail;
-                                _isEmailValid;
-                                _isButtonValid;
+
+                              emailRequest.email = _controllerID.text;
+
+                              var response =  _httpController.postByJson(url, emailRequest.toJson());
+                              response.then((value) {
+                                if (value == null) {
+                                  _isEmailValid = false;
+                                } else {
+                                  _isEmailValid = true && _isEmailMatchForm;
+                                }
+
+                                _isButtonValid = _isEmailValid && _isPW1Valid && _isPW2Valid;
+                                setState(() {
+                                  _isVisibleEmail;
+                                  _isEmailValid;
+                                  _isButtonValid;
+                                });
+                                if (_isEmailValid) {
+                                  FocusScope.of(context).nextFocus();
+                                }
                               });
-                              if (_isEmailValid) {
-                                FocusScope.of(context).nextFocus();
-                              }
                             },
                           ),
                           const SizedBox(
@@ -230,6 +257,8 @@ class _JoinPage1State extends State<JoinPage1> {
                           MyButton(
                             buttonName: '계속하기',
                             onPressed: (_isButtonValid) ? () {
+                              Config.signUpRequest?.email = _controllerID.text;
+                              Config.signUpRequest?.password = _controllerPW1.text;
                               Navigator.pushNamed(context, '/SecondJoin');
                             }: null,
                           )],
@@ -244,10 +273,6 @@ class _JoinPage1State extends State<JoinPage1> {
   }
 }
 
-bool _isEmailDuplicated(String text) {
-  if (text == "chanho") return false;
-  else return true;
-}
 
 // void _duplicateCheck(BuildContext context) {
 //   showDialog(
